@@ -27,6 +27,7 @@
                     <div class="button-group">
                         <div class="button-row ">
                         <el-button type="primary" @click="goToDetail(scope.row.ID, scope.row.name)">详情</el-button>
+                        <el-button type="primary" @click="goToPermission(scope.row.ID)">权限</el-button>
                         </div>
                         <div class="button-row">
                         <el-button type="primary" @click="goToEdit(scope.row.ID)">编辑</el-button>
@@ -73,6 +74,11 @@ const goToDetail = (id, name) => {
 const goToEdit = (id) => {
     router.push(`/graph/edit/${id}`)
 }
+
+const goToPermission = (id) => {
+    router.push(`/graph/permission/${id}`)
+}
+
 const remove = async (id) => {
     ElMessageBox.confirm(
         '确定要删除吗？',

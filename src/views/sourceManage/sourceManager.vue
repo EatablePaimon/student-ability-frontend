@@ -1,6 +1,6 @@
 <template>
     <div class="table-header">
-        <div class="app-count">当前共有 {{ total}} 个评价来源</div>
+        <div class="app-count">当前共有 {{total}} 个评价来源</div>
         <el-button type="primary" class="create-btn" @click="goToCreate">新建</el-button>
     </div>
     <div class="table-container">

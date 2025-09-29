@@ -40,3 +40,37 @@ export function getdetail(id) {
         }
     })
 }
+
+export function getpermission(id,page,pageSize) {
+    return request({
+        url: `/sourcekey/permissions/${id}`,
+        method: 'get',
+        params: { 
+            page:page,
+            pageSize:pageSize
+        }
+    })
+}
+export function putpermission(data){
+    return request({
+        url:`/sourcekey/allow`,
+        method:'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getAdminKey()}`
+           },
+        data: JSON.stringify(data)
+    })
+}
+
+export function removepermission(data){
+    return request({
+        url:`/sourcekey/disallow`,
+        method:'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getAdminKey()}`
+           },
+        data: JSON.stringify(data)
+    })
+}

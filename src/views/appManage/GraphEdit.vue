@@ -89,8 +89,7 @@ const handleSave = async () => {
         await formRef.value.validate()
         loading.value = true
         const res = await request.put(`/sourcekey/${route.params.id}`, form.value);
-        console.log(res);
-        if (res.rows_affected == 1) {
+        if (res && typeof res ) {
             ElMessage.success('保存成功')
             router.push('/source')
         } else {

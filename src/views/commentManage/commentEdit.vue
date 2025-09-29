@@ -7,11 +7,11 @@
       </div>
       <el-card shadow="never">
         <el-form :model="form" :rules="rules" ref="formRef" label-width="120px" class="edit-form" v-loading="loading">
-          <el-form-item label="学号:" prop="stu_number">
-            <el-input v-model="form.stu_number" disabled />
+          <el-form-item label="学生ID:" prop="stu_number">
+            <el-input v-model="form.stu_number" />
           </el-form-item>
           <el-form-item label="姓名:" prop="stu_name">
-            <el-input v-model="form.stu_name" disabled />
+            <el-input v-model="form.stu_name" />
           </el-form-item>
           <el-form-item label="任务:" prop="task">
             <el-input v-model="form.task" />
@@ -55,6 +55,8 @@
   });
   
   const rules = {
+    stu_number: [{ required: true, message: '学生ID不能为空', trigger: 'blur' }],
+    stu_name: [{ required: true, message: '学生姓名不能为空', trigger: 'blur' }],
     task: [{ required: true, message: '任务不能为空', trigger: 'blur' }],
     task_spec: [{ required: true, message: '任务描述不能为空', trigger: 'blur' }],
     score: [{ required: true, message: '分数不能为空', trigger: 'blur' }],
@@ -92,7 +94,7 @@
       loading.value = true;
   
       const res = await request.put(`/review/${route.params.id}`, form.value);
-      if (res.rows_affected === 1) {
+      if (res && typeof res === 'object') {
         ElMessage.success('保存成功');
         router.push('/comment');
       } else {

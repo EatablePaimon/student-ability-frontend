@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Layout from "../layout/Layout.vue";
 import { getAdminKey } from "../utils/key";
-import { ElMessage } from "element-plus";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +31,11 @@ const router = createRouter({
           path: "graph/edit/:id",
           name: "graphEdit",
           component: () => import("../views/appManage/GraphEdit.vue"),
+        },
+        {
+          path: "graph/permission/:id",
+          name: "graphPermission",
+          component: () => import("../views/appManage/GraphPermission.vue"),
         },
         {
           path: "/source",

@@ -168,7 +168,8 @@ const getChartOption = () => {
     series: [{
       type: 'tree',
       data: [treeData.value],
-      layout: 'radial',
+      layout: 'orthogonal',
+      orient: 'TB',
       symbol: 'circle',
       symbolSize: 25,
       roam: true,
@@ -297,7 +298,8 @@ const handleDelete = async () => {
   if (!currentNode.value.ID) return;
   try {
     await ElMessageBox.confirm(
-      `确定要删除节点 "${currentNode.value.Name}" 及其所有子节点吗？`,
+      `确定要删除节点 "${currentNode.value.Name}" 吗？
+      注意：如果当前节点有子节点时无法删除！`,
       '警告',
       {
         confirmButtonText: '确认删除',
@@ -312,7 +314,8 @@ const handleDelete = async () => {
     isEditing.value = false;
   } catch (error) {
     console.error('删除节点失败:', error);
-    ElMessage.error('删除节点失败');
+    if (error.status == 409)
+    ElMessage.error('当前节点有子节点，无法删除');
   }
 };
 
