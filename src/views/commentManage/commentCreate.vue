@@ -11,7 +11,7 @@
                     <el-date-picker v-model="form.created_at" type="datetime" placeholder="请选择创建时间"
                         value-format="YYYY-MM-DDTHH:mm:ssZ" style="width: 100%;" />
                 </el-form-item>
-                <el-form-item label="来源ID">
+                <el-form-item v-if='useAuthStore.isAdmin' label="来源ID">
                     <el-input v-model.number="form.source_id" placeholder="请输入来源ID" />
                 </el-form-item>
                 <el-form-item label="能力ID">
@@ -49,6 +49,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import request from '@/utils/request.js'
 import { ElMessage } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const formRef = ref(null)
@@ -56,7 +57,7 @@ const loading = ref(false)
 
 const form = ref({
     created_at: new Date().toISOString(), 
-    source_id: '',
+    source_id: useAuthStore.id ,
     cap_id: '',
     stu_number: '',
     stu_name: '',

@@ -2,7 +2,7 @@
     <el-container style="padding-top: 10px;">
         <el-header class="header" style="padding-left: 35px;">
             <div class="header-container">
-                <a-menu v-model:selectedKeys="activeIndex" mode="horizontal" :items="menuItems" class="flex-grow menu-no-border" />
+                <a-menu v-model:selectedKeys="activeIndex" mode="horizontal" :items="menuItems" class="flex-grow menu-no-border"/>
                 <el-button type="info" @click="handleLogout" style="margin-right: 50px;">退出登录</el-button>
             </div>
         </el-header>
@@ -13,16 +13,19 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/auth'
 import { computed, h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
-import { removeAdminKey } from '@/utils/key'
+import { removeAppKey } from '@/utils/key'
 import { 
   DeploymentUnitOutlined, 
   CloudUploadOutlined, 
   CommentOutlined 
 } from '@ant-design/icons-vue';
 
+
+const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 
@@ -53,21 +56,24 @@ const menuItems = [
     key: 'graph',
     icon: () => h(DeploymentUnitOutlined),  // 拓扑结构图标
     label: '能力图谱管理',
-    onClick: () => router.push('/graph')
+    onClick: () => router.push('/graph'),
+    visible: true
   },
   {
     key: 'source',
     icon: () => h(CloudUploadOutlined),     // 云端数据源图标
     label: '评价来源管理',
-    onClick: () => router.push('/source')
+    onClick: () => router.push('/source'),
+    visible: authStore.isAdmin
   },
   {
     key: 'comment',
     icon: () => h(CommentOutlined),        // 对话气泡图标
     label: '评价管理',
-    onClick: () => router.push('/comment')
+    onClick: () => router.push('/comment'),
+    visible: true
   }
-];
+].filter(item => item.visible !== false);
 
 const handleLogout = () => {
     ElMessageBox.confirm(
@@ -79,7 +85,7 @@ const handleLogout = () => {
             type: 'warning'
         }
     ).then(() => {
-        removeAdminKey()
+        removeAppKey()
         router.push('/login')
     })
 }

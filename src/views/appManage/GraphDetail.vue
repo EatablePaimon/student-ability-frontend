@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import * as echarts from 'echarts';
 import request from '@/utils/request';
@@ -153,7 +153,6 @@ const initChart = () => {
 };
 
 const getChartOption = () => {
-  
   return {
     tooltip: { 
       trigger: 'item',
@@ -185,7 +184,13 @@ const getChartOption = () => {
       },
       itemStyle: {
         
-        color: '#91cc75', 
+        // color: '#91cc75',
+        color: (params) => {
+          console.log(params);
+          return '#91cc75';
+          console.log(params.data.ID, currentNode.value.ID);
+        return params.data.ID === currentNode.value.ID ? '#87CEEB' : '#91cc75';
+        }, 
         borderColor: '#409eff',
         borderWidth: 1
       },
@@ -234,6 +239,8 @@ const handleNodeClick = (params) => {
   if (params.data && params.data.ID) {
     fetchNodeDetail(params.data.ID);
     isEditing.value = false;
+    currentNode.value.ID = params.data.ID; // 更新当前选中节点的 ID
+    updateChart(); // 重新渲染图表
   }
 };
 

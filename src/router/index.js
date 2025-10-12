@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { ElMessage } from "element-plus";
 import Layout from "../layout/Layout.vue";
-import { getAdminKey } from "../utils/key";
+import { getAppKey } from "../utils/key";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -79,10 +80,9 @@ const router = createRouter({
   
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
-  const adminKey = getAdminKey();
-  // 需要登录的页面，但没有管理员KEY
-  if (to.meta.requiresAuth && (!adminKey || adminKey === "undefined")) {
-    // ElMessage.warning("请先输入管理KEY！");
+  const appKey = getAppKey();
+  if (to.meta.requiresAuth && ((!appKey || appKey === "undefined"))) {
+     ElMessage.warning("请先输入管理KEY！");
     next({ name: "login" });
   } else {
     next();

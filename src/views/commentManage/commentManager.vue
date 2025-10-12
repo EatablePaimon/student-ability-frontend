@@ -31,7 +31,7 @@
       <el-table-column label="能力">
         <template #default="scope">
           <div>
-            能力:<span>{{ scope.row.cap_name }} ({{scope.row.cap_id}})</span>
+            <span>{{ scope.row.cap_name }} ({{scope.row.cap_id}})</span>
           </div>
         </template>
       </el-table-column>
@@ -63,8 +63,8 @@
       <el-table-column label="操作" width="180">
         <template #default="scope">
           <div style="display: flex; justify-content: center; gap: 12px;">
-            <el-button type="primary" @click="goToEdit(scope.row.id)">编辑</el-button>
-            <el-button type="danger" @click="remove(scope.row.id)">删除</el-button>
+            <el-button type="primary" @click="goToEdit(scope.row.ID)">编辑</el-button>
+            <el-button type="danger" @click="remove(scope.row.ID)">删除</el-button>
           </div>
         </template>
       </el-table-column>
@@ -116,6 +116,7 @@ const goToCreate = () => {
 }
 
 const goToEdit = (id) => {
+  console.log(id);
   router.push(`/comment/edit/${id}`)
 }
 
@@ -215,13 +216,9 @@ onMounted(() => {
 
 .pagination-wrapper {
   width: 100%;
-  position: fixed;
-  left: 0px;
-  bottom: 15px;
+  box-sizing: border-box;
   background: #fff;
-  padding: 16px 0;
-  text-align: center;
-  z-index: 100;
-  padding-left: 80px;
+  padding-top: 16px;
+  padding-left: 50px;
 }
 </style>

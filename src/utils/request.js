@@ -1,8 +1,7 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import router from "@/router";
-import { removeAdminKey } from "./key";
-import { getAdminKey } from "./key";
+import { getAppKey, removeAppKey } from "./key";
 
 const baseURL = "/api";
 
@@ -15,11 +14,11 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    const adminKey = getAdminKey();
-    if (adminKey && adminKey !== "undefined") {
+    const appKey = getAppKey();
+    if (appKey && appKey !== "undefined") {
       config.headers["Content-Type"] = "application/json;charset=utf-8";
-      config.headers["Authorization"] = `Bearer ${adminKey}`;
-    }
+      config.headers["Authorization"] = `Bearer ${appKey}`;
+    } 
     return config;
   },
   (error) => {
@@ -35,7 +34,7 @@ service.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      removeAdminKey();
+      removeAppKey();
       router.push("/login");
     } else {
       ElMessage.error(error.response?.data?.msg || "其他错误");

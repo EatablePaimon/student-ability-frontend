@@ -25,7 +25,6 @@
               placeholder="无"
             />
           </el-form-item>
-          <!-- 修复标签字段绑定（改为Lable01-03） -->
           <el-form-item label="标签1">
             <el-input 
               v-model="currentNode.Lable01" 
@@ -52,14 +51,16 @@
       
       <!-- 操作按钮 -->
       <div class="action-buttons">
-        <el-button type="primary" @click="handleAdd" :disabled="!currentNode.ID">新增子节点</el-button>
-        <el-button type="primary"  @click="handleDelete" :disabled="!currentNode.ID">删除此节点</el-button>
-        <el-button type="primary" @click="handleEdit" :disabled="!currentNode.ID">编辑此节点 </el-button>
+        <el-button v-if='useAuthStore.isAdmin' type="primary" @click="handleAdd" :disabled="!currentNode.ID">新增子节点</el-button>
+        <el-button v-if='useAuthStore.isAdmin' type="primary"  @click="handleDelete" :disabled="!currentNode.ID">删除此节点</el-button>
+        <el-button v-if='useAuthStore.isAdmin' type="primary" @click="handleEdit" :disabled="!currentNode.ID">编辑此节点 </el-button>
       </div>
     </div>
   </template>
   
   <script setup>
+import { useAuthStore } from '@/stores/auth';
+
   const props = defineProps({
     currentNode: Object, 
   });

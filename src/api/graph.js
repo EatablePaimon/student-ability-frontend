@@ -1,4 +1,4 @@
-import { getAdminKey, getAppKey } from '@/utils/key'
+import { getAppKey } from '@/utils/key'
 import request from '@/utils/request'
 
 export function post(data) {
@@ -7,7 +7,7 @@ export function post(data) {
         method: 'post',
         headers: {
              'Content-Type': 'application/json',
-             'Authorization': `Bearer ${getAdminKey()}`
+             'Authorization': `Bearer ${getAppKey()}`
             },
         data: JSON.stringify(data)
     })
@@ -57,7 +57,7 @@ export function putpermission(data){
         method:'put',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getAdminKey()}`
+            'Authorization': `Bearer ${getAppKey()}`
            },
         data: JSON.stringify(data)
     })
@@ -69,7 +69,7 @@ export function removepermission(data){
         method:'put',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getAdminKey()}`
+            'Authorization': `Bearer ${getAppKey()}`
            },
         data: JSON.stringify(data)
     })
